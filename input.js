@@ -18,12 +18,10 @@ async function getWeather() {
     document.getElementById("visibility").innerText = "Visibility: " + data.visibility / 1000 + " km";
 
 
-}
+
 
 // 5 day forecast
 
-async function getWeather() {
-  let city = document.getElementById("searchInput").value;
 
   // forecast api only
   let forecastResponse = await fetch(
