@@ -16,7 +16,7 @@
         <span class="text-2xl text-gray-400"> Forecast</span>
     </div>
   
-        <div class="flex items-center justify-center"> <input class=" h-15 w-200 border border-gray-300 p-2 rounded-s-xl text-xl" type="text" placeholder="Enter city, state, country..." > <button class=" flex items-center justify-center h-15 w-15 border border-gray-300 p-2 rounded-r-xl bg-blue-500 "  ><img class="h-7 w-7 " src="search.png" alt="search"></button></div>
+        <div class="flex items-center justify-center"> <input  id="searchInput" class=" h-15 w-200 border border-gray-300 p-2 rounded-s-xl text-xl" type="text" placeholder="Enter city, state, country..." > <button onclick="getWeather()" class=" flex items-center justify-center h-15 w-15 border border-gray-300 p-2 rounded-r-xl bg-blue-500 "  ><img class="h-7 w-7 " src="search.png" alt="search"></button></div>
         
     
     <div  > <button class=" h-15 w-70 flex items-center justify-center gap-2 border border-gray-300 p-2 rounded-xl text-xl text-white bg-blue-500 hover:bg-blue-600"> <div><img  class="w-5 h-5" src="navigation.png" alt="location"></div >Use Current Location</button></div>
@@ -27,6 +27,7 @@
 </header>
 <section class="flex items-center justify-center  hidden   h-10 border border-black p-4">
     <h1>Please Enter Valid Location</h1></section> 
+    <p id="errorMsg" class="hidden text-red-500 ">Please enter valid location</p>
 
 
 <nav>
@@ -49,6 +50,96 @@
             
         </span></div>
 </nav>
+
+<section class="flex flex-row items-center justify-center p-9 gap-1 ">
+    
+    <div 
+      id="weathercontainer"
+     class="h-120 w-140 border to-black rounded-2xl">
+    <h2 id="city"></h2>
+<h3 id="temp"></h3>
+<p id="description"></p>
+<p id="humidity"></p>
+<p id="wind"></p>
+<img id="weatherIcon" src="" alt="">
+<p id="visibility"></p>
+
+    
+    
+    </div>
+    <div class=" flex flex-col items-center justify-end  h-120 w-190">
+
+
+        <div class="h-20 w-176 border to-black "></div>
+        
+     
+       
+        <div  id="forecast" class="flex p-5 gap-4 items-center justify-center">
+            
+           <div  class="h-82 w-32 border to-black rounded-2xl">
+            <h2 id="day1"></h2>
+            <img id="weatherIcon1" src="" alt="">
+            <p id="forecastDesc1"></p>
+            <p id="forecastTemp1"></p>  
+            <p id="forecastwind1"></p> 
+            <p id="humidity1"></p>
+            
+
+               
+
+           </div>
+
+           <div  class="h-82 w-32 border to-black rounded-2xl">
+            <h2 id="day2"></h2>
+            <img id="weatherIcon2" src="" alt="">
+            <p id="forecastDesc2"></p>
+            <p id="forecastTemp2"></p>
+            <p id="forecastwind2"></p>
+            <p id="humidity2"></p>
+            
+
+           </div>
+           <div  class="h-82 w-32 border to-black rounded-2xl">
+            <h2 id="day3"></h2>
+            <img id="weatherIcon3" src="" alt="">
+            <p id="forecastDesc3"></p>
+            <p id="forecastTemp3"></p>
+            <p id="forecastwind3"></p>
+            <p id="humidity3"></p>
+            
+
+           </div>
+           <div class="h-82 w-32 border to-black rounded-2xl">
+            <h2 id="day4"></h2>
+            <img id="weatherIcon4" src="" alt="">
+            <p id="forecastDesc4"></p>
+            <p id="forecastTemp4"></p>
+            <p id="forecastwind4"></p>
+            <p id="humidity4"></p>
+            
+
+           </div>
+           <div  class="h-82 w-32 border to-black rounded-2xl">
+            <h2 id="day5"></h2>
+            <img id="weatherIcon5" src="" alt=""> 
+            <p id="forecastDesc5"></p>
+            <p id="forecastTemp5"></p>  
+            <p id="forecastwind5"></p>
+            <p id="humidity5"></p>
+           
+          
+               
+
+           </div>
+        </div>
+        
+    </div>
+    
+
+
+
+</section>
+<script src="input.js"></script>
 
     
 </body>
