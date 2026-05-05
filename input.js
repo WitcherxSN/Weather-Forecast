@@ -9,13 +9,24 @@ async function getWeather() {
 
   let data = await response.json();
 
-  document.getElementById("city").innerText = data.name;
+  document.getElementById("city").innerText = data.name + ", " + data.sys.country;
   document.getElementById("temp").innerText = data.main.temp + "°C";
-    document.getElementById("description").innerText = data.weather[0].description;
-    document.getElementById("humidity").innerText = "Humidity: " + data.main.humidity + "%";
-    document.getElementById("wind").innerText = "Wind Speed: " + data.wind.speed + " m/s";
-    document.getElementById("weatherIcon").src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-    document.getElementById("visibility").innerText = "Visibility: " + data.visibility / 1000 + " km";
+    document.getElementById("pressure").innerText = " " + data.main.pressure + " hPa";
+    document.getElementById("humidity").innerText = "" + data.main.humidity + "%";
+    document.getElementById("wind").innerText = " " + data.wind.speed + " m/s";
+    document.getElementById("description").innerText = "" + data.weather[0].description;
+    document.getElementById("feelslike").innerText = "Feels like: " + data.main.feels_like + "°C";
+    document.getElementById("date").innerText = new Date().toLocaleDateString();
+
+if (data.weather[0].main === "Clear") {
+  document.getElementById("weatherIcon").src = "sun.png";
+  document.getElementById("weatherIcon").className = "h-40 w-40 group-hover:scale-110 transition-transform duration-300";
+} else {
+  document.getElementById("weatherIcon").src =
+    `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`;
+}
+
+ document.getElementById("visibility").innerText = " " + data.visibility / 1000 + " km";
 
 
 
@@ -54,7 +65,14 @@ function displayForecast(data) {
     document.getElementById("humidity" + i).innerText =
       "Humidity: " + dayData.main.humidity + "%";
 
-    document.getElementById("weatherIcon" + i).src =
-      `https://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`;
+    if (dayData.weather[0].main === "Clear") {
+      document.getElementById("weatherIcon" + i).src = "sun.png" ;
+      document.getElementById("weatherIcon" + i).className = "h-20 w-20 p-2  group-hover:scale-110 transition-transform duration-300 ";
+
+      
+    } else {
+      document.getElementById("weatherIcon" + i).src =
+        `https://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`;
+    }
   }
 }
