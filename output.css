@@ -1137,6 +1137,20 @@
       }
     }
   }
+  .hover\:border-cyan-600 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-cyan-600);
+      }
+    }
+  }
+  .hover\:border-cyan-700 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-cyan-700);
+      }
+    }
+  }
   .hover\:border-cyan-800 {
     &:hover {
       @media (hover: hover) {

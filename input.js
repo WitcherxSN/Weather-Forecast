@@ -23,7 +23,7 @@ async function getWeather() {
  
 
 saveRecentCity(city);
-
+document.getElementById("forecast").classList.remove("hidden");
 document.getElementById("forecastday").classList.add("hidden");
 
 
@@ -239,8 +239,8 @@ let tempElement = document.getElementById("temp");
 }
 
 function showForecast() {
-  document.getElementById("forecast").style.display = "flex";
-  document.getElementById("placeholderBox").style.display = "none";
+  document.getElementById("forecast").style.display = "grid";
+  
 
 }
 
@@ -361,7 +361,7 @@ function saveRecentCity(city) {
 
   localStorage.setItem("recentCities", JSON.stringify(cities));
 }
-function showRecentSearches() {
+function showRecentSearch() {
   let dropdown = document.getElementById("recentSearches");
   let cities = JSON.parse(localStorage.getItem("recentCities")) || [];
 
@@ -390,5 +390,4 @@ document.addEventListener("click", function (event) {
     document.getElementById("recentSearches").classList.add("hidden");
   }
 });
-
 
