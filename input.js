@@ -16,10 +16,16 @@ async function getWeather() {
   if (data.cod !== 200) {
   document.getElementById("errorMessage").innerText = "Please enter a valid city name.";
   document.getElementById("errorMessage").classList.remove("hidden");
+
+
   return;
 }
-  
+ 
+
 saveRecentCity(city);
+
+document.getElementById("forecastday").classList.add("hidden");
+
 
 
 document.getElementById("errorMessage").classList.add("hidden");
@@ -31,6 +37,8 @@ document.getElementById("errorMessage").classList.add("hidden");
     document.getElementById("pressure").innerText = " " + data.main.pressure + " hPa";
     document.getElementById("humidity").innerText = "" + data.main.humidity + "%";
     document.getElementById("wind").innerText = " " + data.wind.speed + " m/s";
+ document.getElementById("visibility").innerText = " " + data.visibility / 1000 + " km";
+
     document.getElementById("description").innerText = "" + data.weather[0].description;
     document.getElementById("feelslike").innerText = "Feels like: " + data.main.feels_like + "°C";
     document.getElementById("sunrise").innerText = new Date(data.sys.sunrise * 1000).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' });
@@ -60,14 +68,21 @@ if (data.weather[0].main === "Clear") {
  document.getElementById("visibility").innerText = " " + data.visibility / 1000 + " km";
 
 
+document.getElementById("temp").innerText = data.main.temp + "°C";
 
+if (data.main.temp > 37) {
+  document.getElementById("temperatureAlert").innerText =
+    "Extreme heat alert! Stay hydrated";
+  document.getElementById("temperatureAlert").classList.remove("hidden");
+} else {
+  document.getElementById("temperatureAlert").classList.add("hidden");
+}
  
 
 let weatherCondition = data.weather[0].description.toLowerCase();
 let weathercontainer = document.getElementById("weathercontainer");
 
-weathercontainer.className =
-  "bg-gradient-to-br flex flex-col items-center justify-center h-120 w-140 rounded-2xl";
+weathercontainer.className ="h-110 w-full xl:w-1/2 bg-gradient-to-br from-blue-600 to-sky-300 rounded-2xl shadow-lg p-6 text-white";
 
 if (weatherCondition.includes("clear")) {
   weathercontainer.classList.add("from-blue-500", "to-sky-300");
@@ -128,7 +143,7 @@ if (weatherCondition.includes("clear")) {
 // 5 day forecast
 
 
-  // forecast api only
+  
   let forecastResponse = await fetch(
     `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
   );
@@ -138,6 +153,7 @@ if (weatherCondition.includes("clear")) {
   console.log(forecastData);
 
   displayForecast(forecastData);
+  
 
   showForecast();
 }
@@ -153,23 +169,31 @@ function displayForecast(data) {
     day: "numeric"
   });
 
-    document.getElementById("forecastDesc" + i).innerText = "" +
-      dayData.weather[0].description.charAt(0).toUpperCase() + dayData.weather[0].description.slice(1);
-
+    document.getElementById("forecastDesc" + i).innerHTML = `
+  <p class="text-gray-600 text-sm text-center h-10 flex items-center justify-center">
+    ${dayData.weather[0].description.charAt(0).toUpperCase() + dayData.weather[0].description.slice(1)}
+  </p>
+`;
     document.getElementById("forecastTemp" + i).innerText = " " +
       dayData.main.temp + "°C";
 
-    document.getElementById("forecastwind" + i).innerHTML =
-  `<img src="wind1.png" class="w-5 h-5 inline-block mr-1">
-   ${dayData.wind.speed} m/s`;
+    document.getElementById("forecastwind" + i).innerHTML = `
+  <div class="flex items-center justify-center gap-1">
+    <img src="wind1.png" class="w-4 h-4">
+    <span>${dayData.wind.speed} m/s</span>
+  </div>
+`;
 
-    document.getElementById("humidity" + i).innerHTML =
-  `<img src="humidity1.png" class="w-5 h-5 inline-block mr-1">
-   ${dayData.main.humidity}%`;
+document.getElementById("humidity" + i).innerHTML = `
+  <div class="flex items-center justify-center gap-1">
+    <img src="humidity1.png" class="w-4 h-4">
+    <span>${dayData.main.humidity}%</span>
+  </div>
+`;
 
     if (dayData.weather[0].main === "Clear") {
       document.getElementById("weatherIcon" + i).src = "sun.png" ;
-      document.getElementById("weatherIcon" + i).className = "h-25 w-25 p-2  group-hover:scale-110 transition-transform duration-300 ";
+      document.getElementById("weatherIcon" + i).className = "h-16 w-16 p-1  group-hover:scale-110 transition-transform duration-300 ";
 
       
     } else {

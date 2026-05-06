@@ -4,223 +4,185 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="./output.css" rel="stylesheet">
     <link rel="stylesheet" href="input.css">
+    <link rel="stylesheet" href="./output.css">
 </head>
-<body class="bg-gray-100">
-     <header class="flex  flex-row items-center  justify-evenly   h-30 bg-white">
-    
-    
-    <div class="flex flex-row items-center justify-center gap-2">
-        <span><img class="w-15 h-15" src="weather.png" alt="logo"></span>
-        <span class="font-bold text-4xl text-blue-500 ">Weather</span>
-        <span class="text-2xl text-gray-400"> Forecast</span>
-    </div>
- <div class="relative w-fit ">
-  
-  <div class="flex items-center justify-center">
-    <input
-      id="searchInput"
-      onfocus="showRecentSearches()"
-      class="h-15 w-200 border border-gray-300 p-2 rounded-s-xl text-xl"
-      type="text"
-      placeholder="Enter city, state, country..."
-    />
-
-    <button
-      onclick="getWeather()"
-      class="flex items-center justify-center h-15 w-15 border border-gray-300 p-2 rounded-r-xl bg-blue-500"
-    >
-      <img class="h-7 w-7" src="search.png" alt="search" />
-    </button>
-  </div>
-
-  <div
+<body class="bg-gray-100 min-h-screen" >
+     <header class="w-full bg-white shadow-md p-4">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <img class="w-12 h-12" src="weather.png" alt="logo" />
+        <div>
+          <h1 class="text-3xl font-bold text-blue-500">Weather</h1>
+          <p class="text-gray-400">Forecast</p>
+        </div>
+      </div>
+      <div class="relative w-fit">
+        <div class="w-full lg:flex-1 flex flex-col sm:flex-row items-center gap-2 lg:max-w-3xl">
+        <input
+          id="searchInput"
+          onkeydown="if(event.key === 'Enter') getWeather()"
+          onfocus="showRecentSearch()"
+          class="h-12 w-80 border border-gray-300 p-3 rounded-xl text-lg"
+          type="text"
+          placeholder="Enter city, state, country..."
+        />
+        <button onclick="getWeather()" class="h-12 px-6 bg-blue-500 text-white rounded-xl hover:bg-blue-600 whitespace-nowrap">
+          Search
+        </button>
+      </div>
+     <div
     id="recentSearches"
     class="hidden absolute top-16 left-0 w-200 bg-white shadow-lg rounded-xl border border-gray-200 z-50"
   ></div>
-</div>
-        
     
-    <div  > <button onclick="getCurrentLocation()" class=" h-15 w-70 flex items-center justify-center gap-2 border border-gray-300 p-2 rounded-xl text-xl text-white bg-blue-500 hover:bg-blue-600"> <div><img  class="w-5 h-5" src="navigation.png" alt="location"></div >Use Current Location</button></div>
+    
+    
+    </div>
+      
 
-
-
-
-</header>
+      <button onclick="getCurrentLocation()" class="h-12 px-5 flex items-center justify-center bg-blue-500 text-white rounded-xl hover:bg-blue-600 whitespace-nowrap"><div><img  class="w-5 h-5" src="navigation.png" alt="location"></div >
+        Use Current Location
+      </button>
+    </div>
+  </header>
 <div id="errorMessage" class="flex items-center justify-center  hidden  text-red-500 h-5 p-4">
       </div>
 
 
-<nav>
-
-    <div class="flex items-center justify-center  bg-gray-50 shadow-lg h-12">
-        <span class="flex items-center justify-between gap-4  w-300">
-            <a  class="flex items-center justify-center gap-2 font-medium text-gray-600 transition-all duration-300 ease-in-out 
-       hover:text-yellow-500 hover:scale-110   " href="#"> <img class="h-6 w-6" src="global.png" alt="All World">All World</a>
+ <nav class="w-full bg-gray-50 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-evenly gap-6 p-3 text-gray-600 font-medium">
+       <a  class="flex items-center justify-center gap-2 font-medium text-gray-600 transition-all duration-300 ease-in-out 
+       hover:text-yellow-500 hover:scale-110   " href="#"> <img class="h-5 w-5" src="global.png" alt="All World">All World</a>
             <a class="flex items-center justify-center gap-2 font-medium text-gray-600 transition-all duration-300 ease-in-out 
-       hover:text-yellow-500 hover:scale-110 " href="#"> <img class="h-6 w-6" src="flag.png" alt="Countries">Countries</a>
+       hover:text-yellow-500 hover:scale-110 " href="#"> <img class="h-5 w-5" src="flag.png" alt="Countries">Countries</a>
             <a class="flex items-center justify-center gap-2 font-medium text-gray-600 transition-all duration-300 ease-in-out 
-       hover:text-yellow-500 hover:scale-110  " href="#"> <img class="h-6 w-6" src="state.png" alt="States/Regions">States/Regions</a>
+       hover:text-yellow-500 hover:scale-110  " href="#"> <img class="h-5  w-5" src="state.png" alt="States/Regions">States/Regions</a>
 
             <a class="flex items-center justify-center gap-2 font-medium  text-gray-600 transition-all duration-300 ease-in-out 
-       hover:text-yellow-500 hover:scale-110  " href="#"> <img class="h-6 w-6" src="cities.png" alt="Cities">Cities</a>
+       hover:text-yellow-500 hover:scale-110  " href="#"> <img class="h-5 w-5" src="cities.png" alt="Cities">Cities</a>
             <a class="flex items-center justify-center gap-2 font-medium text-gray-600 transition-all duration-300 ease-in-out 
-       hover:text-yellow-500 hover:scale-110  " href="#"> <img class="h-6 w-6" src="star.png" alt="Favorites">Favorites</a>
+       hover:text-yellow-500 hover:scale-110  " href="#"> <img class="h-5 w-5" src="star.png" alt="Favorites">Favorites</a>
             <a class="flex items-center justify-center gap-2 font-medium text-gray-600 transition-all duration-300 ease-in-out 
-       hover:text-yellow-500 hover:scale-110  " href="#"> <img class="h-6 w-6" src="about.png" alt="About">About</a>
-            
-        </span></div>
-</nav>
-
-<section class="flex flex-row items-center justify-center p-5 gap-1 bg-gray-100  ">
-    
-    <div 
-      id="weathercontainer"
-     class=" bg-gradient-to-br from-blue-600 to-sky-300 flex flex-col items-center justify-center h-120 w-140   rounded-2xl ">
-     <div class=" h-50 w-120 flex items-center justify-between">
-        <div><h2 id="city" class="text-4xl text-white "> No Location Selected</h2>
-            
-            <h4 id="date" class="text-xl text-gray-300 "></h4>
-            
-       <h3 id="temp" class="text-7xl text-white font-medium"> --</h3>
-       <br>
-       
-        <p id="description" class="text-4xl text-white "></p>
-        <p id="feelslike" class="text-xl text-white "></p>
-    </div>
-        <div><img id="weatherIcon" class=" "  src="" alt=""></div>
-   
-          </div> 
-    
-<div class=" h-50 w-130 flex items-end justify-between p-4 gap-4">
-
-    <div class="border-1 border-gray-300 shadow-lg rounded-2xl h-20 w-30 flex flex-col items-center justify-evenly "><h2 class="flex items-center justify-evenly text-white"><img class="h-6 w-6" src="humidity.png" alt="Humidity">Humidity</h2>
-        <p id="humidity" class="text-white font-medium text-xl">--</p>
+       hover:text-yellow-500 hover:scale-110  " href="#"> <img class="h-5 w-5" src="about.png" alt="About">About</a>
     </div>
 
-    <div class="border-1 border-gray-300 shadow-lg   rounded-2xl h-20 w-30 flex flex-col items-center justify-evenly"><h2 class="flex items-center justify-evenly text-white"><img class="h-6 w-6" src="wind.png" alt="Wind Speed">Wind</h2>
-        <p id="wind" class="text-white font-medium text-xl" >-- </p>
-    </div>
-
-    <div class="border-1 border-gray-300 shadow-lg rounded-2xl h-20 w-30 flex flex-col items-center justify-evenly">
-        <h2 class="flex items-center justify-evenly text-white"><img class="h-6 w-6" src="pressure.png" alt="Pressure">Pressure</h2>
-        <p id="pressure" class="text-white font-medium text-xl " >-- </p>
-    </div>
-
-    <div class="border-1 border-gray-300 shadow-lg rounded-2xl h-20 w-30 flex flex-col items-center justify-evenly">
-        <h2 class="flex items-center justify-evenly text-white"><img class="h-6 w-6" src="visibility.png" alt="Visibility">Visibility</h2>
-           <p id="visibility" class="text-white font-medium text-xl" >-- </p>
-    </div>
-    
-</div>
-
-    
-    
-    </div>
-    <div class=" flex flex-col items-center justify-end  h-120 w-190  ">
+  </nav>
 
 
-        <div class=" flex items-center justify-between h-20 w-176 border-2 border-gray-200 shadow-lg rounded-2xl bg-gray-50 p-4 ">
-             <h2 class="text-2xl font-medium text-gray-600">5 Days Forecast</h2>
-             <div>
-                <button id="celsiusButton" onclick="changetocelsius()" class=" items-center h-10 w-10 bg-gray-400 rounded-xl hover:bg-blue-600 text-xl font-bold text-white">°C</button>
-             <button id="fahrenheitButton" onclick="changetofahrenheit()" class=" items-center h-10 w-10 bg-gray-400 rounded-xl hover:bg-blue-600 text-xl font-bold text-white">°F</button>
-            </div>
-             
-            
+  <section class="flex flex-col xl:flex-row gap-5 p-5 max-w-7xl mx-auto">
+
+    <div id="weathercontainer" class=" h-110 w-full xl:w-1/2 bg-gradient-to-br from-blue-600 to-sky-300 rounded-2xl shadow-lg p-6 text-white">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 id="city" class="text-3xl md:text-4xl font-bold">No Location Selected</h2>
+          <p id="date" class="text-lg text-gray-200 mt-2"></p>
+          <h3 id="temp" class="text-5xl md:text-7xl font-bold mt-4">--</h3> 
+          <p id="temperatureAlert" class="hidden mt-2 text-red-500"></p>
+          <p id="description" class="text-2xl md:text-3xl mt-2"></p>
+          <p id="feelslike" class="mt-2 text-lg"></p>
         </div>
-        
-            <div id="placeholderBox" class="flex items-center justify-center h-92 w-176 border-2 border-gray-200 shadow-lg rounded-2xl bg-gray-50">
-                <p class="text-gray-400 text-xl">Search for a location to see the forecast</p> </div> 
-       
-        <div  id="forecast" style="display: none;" class=" flex p-5 gap-4 items-center justify-center ">
-            
-           <div  class=" bg-white flex flex-col items-center justify-evenly h-82 w-32 border-2 border-gray-200 shadow-lg rounded-2xl hover:transition-transform duration-300 hover:scale-105 group">
-            <h2 id="day1" class="font-medium text-gray-500 "></h2>
-            <img id="weatherIcon1" src="" alt="">
-            
-            <p id="forecastTemp1" class="  text-2xl font-medium text-red-500"></p>
-             <p id="forecastDesc1" class="text-gray-600">--</p> 
-            <p id="forecastwind1" class="text-gray-600">--</p> 
-            <p id="humidity1" class="text-gray-600">--</p>
-            
-
-               
-
-           </div>
-
-           <div  class=" bg-white flex flex-col items-center justify-evenly h-82 w-32 border-2 border-gray-200 shadow-lg rounded-2xl hover:transition-transform duration-300 hover:scale-105 group">
-            <h2 id="day2" class="font-medium text-gray-500"></h2>
-            <img id="weatherIcon2" src="" alt="">
-            
-            <p id="forecastTemp2" class="text-2xl font-medium text-red-500"></p>
-            <p id="forecastDesc2" class="text-gray-600">--</p>
-            <p id="forecastwind2" class="text-gray-600">--</p>
-            <p id="humidity2" class="text-gray-600">--</p>
-            
-
-           </div>
-           <div  class="bg-white    flex flex-col items-center justify-evenly h-82 w-32 border-2 border-gray-200 shadow-lg rounded-2xl hover:transition-transform duration-300 hover:scale-105 group">
-            <h2 id="day3" class="font-medium text-gray-500"></h2>
-            <img id="weatherIcon3" src="" alt="">
-            
-            <p id="forecastTemp3" class="text-2xl font-medium text-red-500"></p>
-            <p id="forecastDesc3" class="text-gray-600">--</p>
-            <p id="forecastwind3" class="text-gray-600">--</p>
-            <p id="humidity3" class="text-gray-600">--</p>
-            
-
-           </div>
-           <div class=" bg-white flex flex-col items-center justify-evenly h-82 w-32 border-2 border-gray-200 shadow-lg rounded-2xl hover:transition-transform duration-300 hover:scale-105 group">
-            <h2 id="day4" class="font-medium text-gray-500"></h2>
-            <img id="weatherIcon4" src="" alt="">
-            
-            <p id="forecastTemp4" class="text-2xl font-medium text-red-500"></p>
-            <p id="forecastDesc4" class="text-gray-600">--</p>
-            <p id="forecastwind4" class="text-gray-600">--</p>
-            <p id="humidity4" class="text-gray-600">--</p>
-            
-
-           </div>
-           <div  class=" bg-white flex flex-col items-center justify-evenly h-82 w-32 border-2 border-gray-200 shadow-lg rounded-2xl hover:transition-transform duration-300 hover:scale-105 group">
-            <h2 id="day5" class="font-medium text-gray-500"></h2>
-            <img id="weatherIcon5" src="" alt=""> 
-            
-            <p id="forecastTemp5" class="text-2xl font-medium text-red-500"></p>
-            <p id="forecastDesc5" class="text-gray-600">--</p> 
-            <p id="forecastwind5" class="text-gray-600">--</p>
-            <p id="humidity5" class="text-gray-600">--</p>
-           
-
-          
-               
-
-           </div>
+        <div>
+          <img id="weatherIcon" src="" alt="" class="" />
         </div>
-        
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+        <div class="bg-white/20 rounded-xl p-4 text-center">
+          <p class="flex items-center "><img class="w-5 h-5" src="humidity.png" alt="Humidity">Humidity</p>
+          <p id="humidity">--</p>
+        </div>
+        <div class="bg-white/20 rounded-xl p-4 text-center">
+          <p class="flex items-center"><img class="w-5 h-5" src="wind.png" alt="Wind">Wind</p>
+          <p id="wind">--</p>
+        </div>
+        <div class="bg-white/20 rounded-xl p-4 text-center">
+          <p class="flex items-center"><img class="w-5 h-5" src="pressure.png" alt="Pressure">Pressure</p>
+          <p id="pressure">--</p>
+        </div>
+        <div class="bg-white/20 rounded-xl p-4 text-center">
+          <p class="flex items-center"><img class="w-5 h-5" src="visibility.png" alt="Visibility">Visibility</p>
+          <p id="visibility">--</p>
+        </div>
+      </div>
+
+      
     </div>
-    
 
+    <div class=" w-full xl:w-1/2 flex flex-col gap-4">
+      <div class="bg-white  rounded-2xl shadow-lg p-5">
+        <div class="flex justify-between items-center mb-5">
+          <h2 class="text-2xl font-semibold text-gray-700">5 Days Forecast</h2>
+          <div class="flex gap-2">
+            <button id="celsiusButton" onclick="changetocelsius()" class="h-10 w-10 bg-gray-400 rounded-xl hover:bg-blue-600 text-xl font-bold text-white">°C</button>
+          <button id="fahrenheitButton" onclick="changetofahrenheit()" class="h-10 w-10 bg-gray-400 rounded-xl hover:bg-blue-600 text-xl font-bold text-white">°F</button>
+          </div>
+        </div>
 
+        <div id="forecastday" class="  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div class="bg-gray-50 rounded-xl shadow p-4 text-center">Day 1</div>
+          <div class="bg-gray-50 rounded-xl shadow p-4 text-center">Day 2</div>
+          <div class="bg-gray-50 rounded-xl shadow p-4 text-center">Day 3</div>
+          <div class="bg-gray-50 rounded-xl shadow p-4 text-center">Day 4</div>
+          <div class="bg-gray-50 rounded-xl shadow p-4 text-center">Day 5</div>
+        </div>
 
-</section>
-<br>
+      <div id="forecast" style="display: none;" class="  w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5  justify-items-center mt-4">
+        <div class="bg-white w-full max-w-[140px] flex flex-col items-center justify-evenly h-85 border-2 border-gray-200 shadow-lg rounded-2xl p-3">
+          <h2 id="day1" class="font-medium text-gray-500 text-sm"></h2>
+          <img id="weatherIcon1" src="" alt="">
+          <p id="forecastTemp1" class="text-2xl font-medium text-red-500"></p>
+          <p id="forecastDesc1" class="text-gray-600 ">--</p>
+          <p id="forecastwind1" class="text-gray-600 text-sm">--</p>
+          <p id="humidity1" class="text-gray-600 text-sm">--</p>
+        </div>
 
+        <div class="bg-white w-full max-w-[140px] flex flex-col items-center justify-evenly h-85 border-2 border-gray-200 shadow-lg rounded-2xl p-3">
+          <h2 id="day2" class="font-medium text-gray-500 text-sm"></h2>
+          <img id="weatherIcon2" src="" alt="">
+          <p id="forecastTemp2" class="text-2xl font-medium text-red-500"></p>
+          <p id="forecastDesc2" class="text-gray-600 ">--</p>
+          <p id="forecastwind2" class="text-gray-600 text-sm">--</p>
+          <p id="humidity2" class="text-gray-600 text-sm">--</p>
+        </div>
 
+        <div class="bg-white w-full max-w-[140px] flex flex-col items-center justify-evenly h-85 border-2 border-gray-200 shadow-lg rounded-2xl p-3">
+          <h2 id="day3" class="font-medium text-gray-500 text-sm"></h2>
+          <img id="weatherIcon3" src="" alt="">
+          <p id="forecastTemp3" class="text-2xl font-medium text-red-500"></p>
+          <p id="forecastDesc3" class="text-gray-600 ">--</p>
+          <p id="forecastwind3" class="text-gray-600 text-sm">--</p>
+          <p id="humidity3" class="text-gray-600 text-sm">--</p>
+        </div>
 
-<footer class="h-55 w-473 flex items-center justify-center gap-5 bg-gray-100">
-    <div class="h-70 w-130 border border-gray-300 rounded-2xl shadow-md  bg-white flex flex-col items-center justify-evenly ">
-        <h2 class="text-lg font-semibold text-gray-700">Search by Country</h2>
-        <div class="flex  items-center justify-center w-140 gap-25"> <img class="w-30 h-30" src="globe.png" alt="Globe">
-        
-            <div class="h-30 w-70 flex flex-col  items-center justify-evenly" >   <div><select 
-  name="country" 
-  id="countryselect" 
-  class="h-10 w-60 border border-gray-300 rounded-xl p-2 text-gray-500"
->
-    <option value="" disabled selected hidden>Select Country</option>
-    <option value="us">United States</option>
+        <div class="bg-white w-full max-w-[140px] flex flex-col items-center justify-evenly h-85 border-2 border-gray-200 shadow-lg rounded-2xl p-3">
+          <h2 id="day4" class="font-medium text-gray-500 text-sm"></h2>
+          <img id="weatherIcon4" src="" alt="">
+          <p id="forecastTemp4" class="text-2xl font-medium text-red-500"></p>
+          <p id="forecastDesc4" class="text-gray-600 ">--</p>
+          <p id="forecastwind4" class="text-gray-600 text-sm">--</p>
+          <p id="humidity4" class="text-gray-600 text-sm">--</p>
+        </div>
+
+        <div class="bg-white w-full max-w-[140px] flex flex-col items-center justify-evenly h-85 border-2 border-gray-200 shadow-lg rounded-2xl p-3">
+          <h2 id="day5" class="font-medium text-gray-500 text-sm"></h2>
+          <img id="weatherIcon5" src="" alt="">
+          <p id="forecastTemp5" class="text-2xl font-medium text-red-500"></p>
+          <p id="forecastDesc5" class="text-gray-600 ">--</p>
+          <p id="forecastwind5" class="text-gray-600 text-sm">--</p>
+          <p id="humidity5" class="text-gray-600 text-sm">--</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="max-w-7xl mx-auto p-5 grid grid-cols-1 lg:grid-cols-3 gap-5">
+    <div class="bg-white rounded-2xl shadow-lg p-5 flex flex-col  gap-4">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Search by Country</h2>
+      <select id="countryselect" class="w-full h-12 border border-gray-300 rounded-xl p-2 text-gray-500">
+        <option>Select Country</option>
+        <option value="us">United States</option>
     <option value="uk">United Kingdom</option>
     <option value="ca">Canada</option>
     <option value="in">India</option>
@@ -229,39 +191,35 @@
     <option value="de">Germany</option>
     <option value="jp">Japan</option>
     <option value="ru">Russia</option>
-</select></div>
-<div><Button onclick="getCountryLocation()" class="h-10 w-60 bg-blue-500 text-white rounded-xl p-2 items-center hover:bg-blue-600">Search</Button></div>
+      </select> 
+      <div><Button onclick="getCountryLocation()" class="w-full h-9 bg-blue-500 text-white rounded-xl items-center hover:bg-blue-600">Search</Button></div>
+<div class="flex items-center justify-center gap-1">
+                
+                <button onclick="getUSALocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-5 h-5" src="us.svg" alt="">USA</button>
+                <button onclick="getIndiaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-5 h-5" src="in.svg" alt="">IND</button>
+                <button onclick="getCanadaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-5 h-5" src="ca.svg" alt="">CAD</button>
+                <button onclick="getUKLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-5 h-5" src="uk.svg" alt="">UK</button>
+                <button onclick="getAustraliaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-5 h-5" src="au.svg" alt="">AUS</button>
+            </div>
+</div>
 
 </div>
+         
+            
         
-         </div>
-         <h2 class="text-lg font-semibold text-gray-700">Popular Countries</h2>
-            <div class="flex items-center justify-center gap-2">
-                
-                <button onclick="getUSALocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="us.svg" alt="">USA</button>
-                <button onclick="getIndiaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="in.svg" alt="">India</button>
-                <button onclick="getCanadaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="ca.svg" alt="">Canada</button>
-                <button onclick="getUKLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="uk.svg" alt="">UK</button>
-                <button onclick="getAustraliaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="au.svg" alt="">Australia</button>
-            </div>
-        
-        
-
     </div>
-    <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white flex flex-col items-center justify-evenly  ">
-           <h2 class="text-lg font-semibold text-gray-700  ">All India Weather Overview</h2>
-           <div class="flex flex-col items-center justify-center p-1"><div class="flex items-center justify-center gap-2">
-               <div><img class="w-66 h-27" src="map.png" alt=""></div>
-               <p class="text-gray-600 ">Get the latest weather updates across all states and union territories in India.</p>
-           </div >
-           <button class="h-10 w-60  border border-cyan-600 bg-white font-medium text-cyan-600 rounded-xl p-2 items-center hover:border hover:border-cyan-800 hover:text-cyan-800">View Details</button>
-    </div></div>
 
+    <div class="bg-white rounded-2xl shadow-lg p-5 flex flex-col gap-4 ">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">India Weather Overview</h2>
+      <p class="text-gray-600">Get the latest weather updates across all states and union territories in India.</p>
+      <br>
+      <button class="h-10 w-60  border border-cyan-700 bg-white font-medium text-cyan-600 rounded-xl items-center hover:border hover:border-cyan-900 hover:text-cyan-800">View Details</button>
+    </div>
 
-
-    <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white flex flex-col items-center justify-evenly  ">
-            <h2 class="text-lg font-semibold text-gray-700  ">Today's Highlights</h2>
-            <div class=" flex flex-col    w-80 ">
+    <div class="bg-white rounded-2xl shadow-lg p-5">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Today's Highlights</h2>
+      
+      <div class=" flex flex-col    ">
                    <div class="border-b-2 border-gray-200 h-10 flex items-center justify-between">
                     <div class="flex items-center justify-between"><img class="w-6 h-6" src="uvindex.png" alt="" ><p class="text-gray-600">UV Index</p></div>
                     <p id="uvindex" class="text-gray-700 font-medium">--</p>
@@ -270,7 +228,7 @@
                    </div>
                    
 
-                   <div class=" border-b-2 border-gray-200 h-10 flex items-center justify-between"> 
+                   <div class=" border-b-2 border-gray-200 h-10  flex items-center justify-between"> 
                     <div class="flex items-center justify-between"><img class="w-6 h-6" src="sunrise.png" alt=""><p class="text-gray-600">Sunrise</p></div>
                    <p id="sunrise" class="text-gray-700 font-medium">--</p>
 
@@ -288,17 +246,10 @@
 
 
             </div>
-
-
-
     </div>
+  </footer>
 
-
-
-</footer>
-<script src="input.js"></script>
-
-    
+  <script src="input.js"></script>
 </body>
-
 </html>
+  
