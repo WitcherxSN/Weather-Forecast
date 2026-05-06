@@ -20,7 +20,7 @@
         <div class="flex items-center justify-center"> <input  id="searchInput" class=" h-15 w-200 border border-gray-300 p-2 rounded-s-xl text-xl" type="text" placeholder="Enter city, state, country..." > <button onclick="getWeather()" class=" flex items-center justify-center h-15 w-15 border border-gray-300 p-2 rounded-r-xl bg-blue-500 "  ><img class="h-7 w-7 " src="search.png" alt="search"></button></div>
         
     
-    <div  > <button class=" h-15 w-70 flex items-center justify-center gap-2 border border-gray-300 p-2 rounded-xl text-xl text-white bg-blue-500 hover:bg-blue-600"> <div><img  class="w-5 h-5" src="navigation.png" alt="location"></div >Use Current Location</button></div>
+    <div  > <button onclick="getCurrentLocation()" class=" h-15 w-70 flex items-center justify-center gap-2 border border-gray-300 p-2 rounded-xl text-xl text-white bg-blue-500 hover:bg-blue-600"> <div><img  class="w-5 h-5" src="navigation.png" alt="location"></div >Use Current Location</button></div>
 
 
 
@@ -222,7 +222,14 @@
         
 
     </div>
-    <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white"></div>
+    <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white  ">
+           <h2 class="text-lg font-semibold text-gray-700 p-3.5 ">All India Weather Overview</h2>
+           <div class="flex flex-col items-center justify-center p-1"><div class="flex items-center justify-center gap-2">
+               <div><img class="w-66 h-27" src="map.png" alt=""></div>
+               <p class="text-gray-600 ">Get the latest weather updates across all states and union territories in India.</p>
+           </div >
+           <button class="h-10 w-60  border border-cyan-600 bg-white font-medium text-cyan-600 rounded-xl p-2 items-center hover:border hover:border-cyan-800 hover:text-cyan-800">View Details</button>
+    </div></div>
     <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white"></div>
 
 

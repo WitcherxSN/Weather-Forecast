@@ -13,6 +13,8 @@ async function getWeather() {
   );
 
   let data = await response.json();
+  
+
 
   if (data.cod !== 200) {
   document.getElementById("errorMessage").innerText = "Please enter a valid city name.";
@@ -151,4 +153,50 @@ function showForecast() {
   document.getElementById("forecast").style.display = "flex";
   document.getElementById("placeholderBox").style.display = "none";
 
+}
+
+function getCurrentLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  } else {
+    document.getElementById("errorMessage").innerText =
+      "Geolocation is not supported by this browser";
+    document.getElementById("errorMessage").classList.remove("hidden");
+  }
+}
+
+async function showPosition(position) {
+  let lat = position.coords.latitude;
+  let lon = position.coords.longitude;
+
+  let response = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+  );
+
+  let data = await response.json();
+
+  document.getElementById("searchInput").value = data.name;
+
+  getWeather();
+}
+function showError(error) {
+  document.getElementById("errorMessage").classList.remove("hidden");
+
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      document.getElementById("errorMessage").innerText =
+        "Location access denied";
+      break;
+    case error.POSITION_UNAVAILABLE:
+      document.getElementById("errorMessage").innerText =
+        "Location unavailable";
+      break;
+    case error.TIMEOUT:
+      document.getElementById("errorMessage").innerText =
+        "Location request timed out";
+      break;
+    default:
+      document.getElementById("errorMessage").innerText =
+        "Something went wrong";
+  }
 }
