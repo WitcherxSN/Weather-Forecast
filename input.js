@@ -13,14 +13,14 @@ async function getWeather() {
   );
 
   let data = await response.json();
-  
-
-
   if (data.cod !== 200) {
   document.getElementById("errorMessage").innerText = "Please enter a valid city name.";
   document.getElementById("errorMessage").classList.remove("hidden");
   return;
 }
+  
+saveRecentCity(city);
+
 
 document.getElementById("errorMessage").classList.add("hidden");
 
@@ -33,6 +33,10 @@ document.getElementById("errorMessage").classList.add("hidden");
     document.getElementById("wind").innerText = " " + data.wind.speed + " m/s";
     document.getElementById("description").innerText = "" + data.weather[0].description;
     document.getElementById("feelslike").innerText = "Feels like: " + data.main.feels_like + "°C";
+    document.getElementById("sunrise").innerText = new Date(data.sys.sunrise * 1000).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' });
+    document.getElementById("sunset").innerText = new Date(data.sys.sunset * 1000).toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' });
+      
+      
     document.getElementById("date").innerText = new Date(data.dt * 1000)
   .toLocaleDateString("en-US", {
     weekday: "long",
@@ -41,6 +45,8 @@ document.getElementById("errorMessage").classList.add("hidden");
     year: "numeric"
   });
 
+
+  
 
 
 if (data.weather[0].main === "Clear") {
@@ -57,6 +63,65 @@ if (data.weather[0].main === "Clear") {
 
  
 
+let weatherCondition = data.weather[0].description.toLowerCase();
+let weathercontainer = document.getElementById("weathercontainer");
+
+weathercontainer.className =
+  "bg-gradient-to-br flex flex-col items-center justify-center h-120 w-140 rounded-2xl";
+
+if (weatherCondition.includes("clear")) {
+  weathercontainer.classList.add("from-blue-500", "to-sky-300");
+
+} else if (weatherCondition.includes("few clouds")) {
+  weathercontainer.classList.add("from-sky-400", "to-gray-300");
+
+} else if (weatherCondition.includes("scattered clouds")) {
+  weathercontainer.classList.add("from-sky-400", "to-slate-300");
+
+} else if (weatherCondition.includes("broken clouds")) {
+  weathercontainer.classList.add("from-gray-400", "to-slate-500");
+
+} else if (weatherCondition.includes("overcast clouds")) {
+  weathercontainer.classList.add("from-gray-500", "to-slate-700");
+
+  
+} else if (weatherCondition.includes("heavy intensity drizzle")) {
+  weathercontainer.classList.add(  "from-gray-800",   "to-blue-700" );
+ 
+ 
+  
+
+} else if (weatherCondition.includes("light intensity drizzle")) {
+  weathercontainer.classList.add(   "from-gray-600", "to-cyan-200" );
+   
+ 
+  
+
+} else if (weatherCondition.includes("drizzle")) {
+  weathercontainer.classList.add(  "from-cyan-300", "to-blue-500");
+   
+    
+  
+  
+  
+
+
+} else if (weatherCondition.includes("rain")) {
+  weathercontainer.classList.add("from-blue-500", "to-indigo-700");
+
+} else if (weatherCondition.includes("thunderstorm")) {
+  weathercontainer.classList.add("from-slate-700", "to-purple-900");
+
+} else if (weatherCondition.includes("snow")) {
+  weathercontainer.classList.add("from-cyan-100", "to-blue-200");
+
+} else if (
+  weatherCondition.includes("mist") ||
+  weatherCondition.includes("fog") ||
+  weatherCondition.includes("haze")
+) {
+  weathercontainer.classList.add("from-gray-200", "to-gray-400");
+}
 
 
 
@@ -200,3 +265,106 @@ function showError(error) {
         "Something went wrong";
   }
 }
+function getUSALocation() {
+  document.getElementById("searchInput").value = "New York";
+  getWeather();
+}
+function getIndiaLocation() {
+  document.getElementById("searchInput").value = "New Delhi";
+  getWeather();
+}
+function getCanadaLocation() {
+  document.getElementById("searchInput").value = "Toronto";
+  getWeather();
+}
+function getUKLocation() {
+  document.getElementById("searchInput").value = "London";
+  getWeather();
+}
+function getAustraliaLocation() {
+  document.getElementById("searchInput").value = "Sydney";
+  getWeather();
+}
+
+function getCountryLocation() {
+  let countryselect = document.getElementById("countryselect");
+  let selectedCountry = countryselect.value;
+  if (selectedCountry === "us") {
+    document.getElementById("searchInput").value = "New York";
+    getWeather();
+  } else if (selectedCountry === "in") {
+    document.getElementById("searchInput").value = "New Delhi";
+    getWeather();
+  } else if (selectedCountry === "ca") {
+    document.getElementById("searchInput").value = "Toronto";
+    getWeather();
+  } else if (selectedCountry === "uk") {
+    document.getElementById("searchInput").value = "London";
+    getWeather();
+  } else if (selectedCountry === "au") {
+    document.getElementById("searchInput").value = "Sydney";
+    getWeather();
+  } else if (selectedCountry === "fr") {
+    document.getElementById("searchInput").value = "Paris";
+    getWeather();
+  } else if (selectedCountry === "ru") {
+    document.getElementById("searchInput").value = "Moscow";
+    getWeather();
+  }
+    else if (selectedCountry === "de") {
+    document.getElementById("searchInput").value = "Berlin";
+    getWeather();
+  }
+ else if (selectedCountry === "jp") {
+    document.getElementById("searchInput").value = "Tokyo";
+    getWeather();
+  } else {
+    document.getElementById("errorMessage").innerText = "Please select a country.";
+    document.getElementById("errorMessage").classList.remove("hidden");
+  } 
+}
+
+
+function saveRecentCity(city) {
+  let cities = JSON.parse(localStorage.getItem("recentCities")) || [];
+
+  cities = cities.filter((item) => item.toLowerCase() !== city.toLowerCase());
+  cities.unshift(city);
+
+  if (cities.length > 5) {
+    cities.pop();
+  }
+
+  localStorage.setItem("recentCities", JSON.stringify(cities));
+}
+function showRecentSearches() {
+  let dropdown = document.getElementById("recentSearches");
+  let cities = JSON.parse(localStorage.getItem("recentCities")) || [];
+
+  if (cities.length === 0) return;
+
+  dropdown.innerHTML = "";
+  dropdown.classList.remove("hidden");
+
+  cities.forEach((city) => {
+    dropdown.innerHTML += `
+      <div onclick="selectCity('${city}')"
+        class="p-3 hover:bg-gray-100 cursor-pointer">
+        ${city}
+      </div>
+    `;
+  });
+}
+
+function selectCity(city) {
+  document.getElementById("searchInput").value = city;
+  document.getElementById("recentSearches").classList.add("hidden");
+  getWeather();
+}
+document.addEventListener("click", function (event) {
+  if (!event.target.closest("#searchInput")) {
+    document.getElementById("recentSearches").classList.add("hidden");
+  }
+});
+
+

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="input.css">
 </head>
 <body class="bg-gray-100">
-     <header class="flex  flex-row items-center  justify-evenly  h-30 bg-white">
+     <header class="flex  flex-row items-center  justify-evenly   h-30 bg-white">
     
     
     <div class="flex flex-row items-center justify-center gap-2">
@@ -16,8 +16,30 @@
         <span class="font-bold text-4xl text-blue-500 ">Weather</span>
         <span class="text-2xl text-gray-400"> Forecast</span>
     </div>
+ <div class="relative w-fit ">
   
-        <div class="flex items-center justify-center"> <input  id="searchInput" class=" h-15 w-200 border border-gray-300 p-2 rounded-s-xl text-xl" type="text" placeholder="Enter city, state, country..." > <button onclick="getWeather()" class=" flex items-center justify-center h-15 w-15 border border-gray-300 p-2 rounded-r-xl bg-blue-500 "  ><img class="h-7 w-7 " src="search.png" alt="search"></button></div>
+  <div class="flex items-center justify-center">
+    <input
+      id="searchInput"
+      onfocus="showRecentSearches()"
+      class="h-15 w-200 border border-gray-300 p-2 rounded-s-xl text-xl"
+      type="text"
+      placeholder="Enter city, state, country..."
+    />
+
+    <button
+      onclick="getWeather()"
+      class="flex items-center justify-center h-15 w-15 border border-gray-300 p-2 rounded-r-xl bg-blue-500"
+    >
+      <img class="h-7 w-7" src="search.png" alt="search" />
+    </button>
+  </div>
+
+  <div
+    id="recentSearches"
+    class="hidden absolute top-16 left-0 w-200 bg-white shadow-lg rounded-xl border border-gray-200 z-50"
+  ></div>
+</div>
         
     
     <div  > <button onclick="getCurrentLocation()" class=" h-15 w-70 flex items-center justify-center gap-2 border border-gray-300 p-2 rounded-xl text-xl text-white bg-blue-500 hover:bg-blue-600"> <div><img  class="w-5 h-5" src="navigation.png" alt="location"></div >Use Current Location</button></div>
@@ -57,7 +79,7 @@
       id="weathercontainer"
      class=" bg-gradient-to-br from-blue-600 to-sky-300 flex flex-col items-center justify-center h-120 w-140   rounded-2xl ">
      <div class=" h-50 w-120 flex items-center justify-between">
-        <div><h2 id="city" class="text-4xl text-gray-300 "> No Location Selected</h2>
+        <div><h2 id="city" class="text-4xl text-white "> No Location Selected</h2>
             
             <h4 id="date" class="text-xl text-gray-300 "></h4>
             
@@ -194,7 +216,7 @@
         
             <div class="h-30 w-70 flex flex-col  items-center justify-evenly" >   <div><select 
   name="country" 
-  id="country" 
+  id="countryselect" 
   class="h-10 w-60 border border-gray-300 rounded-xl p-2 text-gray-500"
 >
     <option value="" disabled selected hidden>Select Country</option>
@@ -203,8 +225,12 @@
     <option value="ca">Canada</option>
     <option value="in">India</option>
     <option value="au">Australia</option>
+    <option value="fr">France</option>
+    <option value="de">Germany</option>
+    <option value="jp">Japan</option>
+    <option value="ru">Russia</option>
 </select></div>
-<div><Button class="h-10 w-60 bg-blue-500 text-white rounded-xl p-2 items-center hover:bg-blue-600">Search</Button></div>
+<div><Button onclick="getCountryLocation()" class="h-10 w-60 bg-blue-500 text-white rounded-xl p-2 items-center hover:bg-blue-600">Search</Button></div>
 
 </div>
         
@@ -212,25 +238,60 @@
          <h2 class="text-lg font-semibold text-gray-700">Popular Countries</h2>
             <div class="flex items-center justify-center gap-2">
                 
-                <button class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="us.svg" alt="">USA</button>
-                <button class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="in.svg" alt="">India</button>
-                <button class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="ca.svg" alt="">Canada</button>
-                <button class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="uk.svg" alt="">UK</button>
-                <button class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="au.svg" alt="">Australia</button>
+                <button onclick="getUSALocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="us.svg" alt="">USA</button>
+                <button onclick="getIndiaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="in.svg" alt="">India</button>
+                <button onclick="getCanadaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="ca.svg" alt="">Canada</button>
+                <button onclick="getUKLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="uk.svg" alt="">UK</button>
+                <button onclick="getAustraliaLocation()" class="h-10 w-22 border border-gray-300 rounded-xl shadow-md flex items-center justify-center text-gray-500 text-sm bg-gray-100 hover:bg-gray-200"><img class="w-6 h-6" src="au.svg" alt="">Australia</button>
             </div>
         
         
 
     </div>
-    <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white  ">
-           <h2 class="text-lg font-semibold text-gray-700 p-3.5 ">All India Weather Overview</h2>
+    <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white flex flex-col items-center justify-evenly  ">
+           <h2 class="text-lg font-semibold text-gray-700  ">All India Weather Overview</h2>
            <div class="flex flex-col items-center justify-center p-1"><div class="flex items-center justify-center gap-2">
                <div><img class="w-66 h-27" src="map.png" alt=""></div>
                <p class="text-gray-600 ">Get the latest weather updates across all states and union territories in India.</p>
            </div >
            <button class="h-10 w-60  border border-cyan-600 bg-white font-medium text-cyan-600 rounded-xl p-2 items-center hover:border hover:border-cyan-800 hover:text-cyan-800">View Details</button>
     </div></div>
-    <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white"></div>
+
+
+
+    <div class="h-59 w-92 border border-gray-300 rounded-2xl shadow-md  bg-white flex flex-col items-center justify-evenly  ">
+            <h2 class="text-lg font-semibold text-gray-700  ">Today's Highlights</h2>
+            <div class=" flex flex-col    w-80 ">
+                   <div class="border-b-2 border-gray-200 h-10 flex items-center justify-between">
+                    <div class="flex items-center justify-between"><img class="w-6 h-6" src="uvindex.png" alt="" ><p class="text-gray-600">UV Index</p></div>
+                    <p id="uvindex" class="text-gray-700 font-medium">--</p>
+
+
+                   </div>
+                   
+
+                   <div class=" border-b-2 border-gray-200 h-10 flex items-center justify-between"> 
+                    <div class="flex items-center justify-between"><img class="w-6 h-6" src="sunrise.png" alt=""><p class="text-gray-600">Sunrise</p></div>
+                   <p id="sunrise" class="text-gray-700 font-medium">--</p>
+
+                   </div>
+
+                   <div class=" border-b-2 border-gray-200 h-10 flex items-center justify-between">
+                    <div class="flex items-center justify-between"><img class="w-6 h-6" src="sunset.png" alt=""><p class="text-gray-600">Sunset</p></div>
+                    <p id="sunset" class="text-gray-700 font-medium">--</p>
+                   </div>
+
+                   <div class=" h-10 flex items-center justify-between">
+                    <div class="flex items-center justify-between"><img class="w-5 h-5" src="leaf.png" alt=""><p class="text-gray-600">Air Quality  Index </p></div>
+                    <p id="airqualityindex" class="text-gray-700 font-medium">--</p>
+                   </div>
+
+
+            </div>
+
+
+
+    </div>
 
 
 
